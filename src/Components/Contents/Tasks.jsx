@@ -1,5 +1,4 @@
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { FaMinus } from "react-icons/fa";
+import { FaPen } from "react-icons/fa";import { FaMinus } from "react-icons/fa";
 const Tasks = ({ task, index, editTask, test, handleEdit, handleOnClickUpdate, handlePriority, handleTaskStatus, handleDeleteTask }) => {
     const { taskName, priority, status } = task;
 
@@ -9,7 +8,7 @@ const Tasks = ({ task, index, editTask, test, handleEdit, handleOnClickUpdate, h
                 <div>
                     <div className=''>
                         <div className='flex justify-between items-center mb-1'>
-                            <div><h2 className='cursor-pointer' onClick={() => editTask(index)}>!</h2></div>
+                            <div><h2 className='cursor-pointer text-sm' onClick={() => editTask(index)}><FaPen /></h2></div>
                             <div className='flex gap-1'>
                                 <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
                                 <button onClick={() => handleTaskStatus('ongoing', index)} className='border border-yellow-600 hover:bg-yellow-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Ongoing</button>
@@ -25,7 +24,9 @@ const Tasks = ({ task, index, editTask, test, handleEdit, handleOnClickUpdate, h
                             <>
                                 <input onChange={(e) => handleEdit(e.target.value)} className='p-2 w-full border-2 border-gray-500' type="text" placeholder={taskName} />
                                 <div className='mb-1 mt-1'>
-                                    <div className=''>
+                                    <h2 className="text-sm">Priority</h2>
+                                    <div className="border-1 border-gray-500"></div>
+                                    <div className='mb-2'>
                                         <button onClick={() => handlePriority('low')} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Low</button>
                                         <button onClick={() => handlePriority('medium')} className='border border-yellow-600 hover:bg-yellow-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Medium</button>
                                         <button onClick={() => handlePriority('high')} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>High</button>

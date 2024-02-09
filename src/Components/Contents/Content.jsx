@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Tasks from './Tasks';
+import moment from 'moment';
 const Content = () => {
     const [isClicked, setIsClicked] = useState(false)
     const [taskType, setTaskType] = useState(null)
     const [inputText, setInputText] = useState('');
     const [allTask, setAllTask] = useState([])
-    const [test, setTest] = useState('')
+    const [taskIndex, setTaskIndex] = useState('')
     const [editTask, setEditTask] = useState('')
     const makeVisibleInputField = (column) => {
         setIsClicked(true)
@@ -20,7 +21,8 @@ const Content = () => {
         const newTask = {
             taskName: inputText,
             status: taskType,
-            priority: ''
+            priority: '',
+            taskAddingTime: moment().format('L'),
         };
 
         const updatedTasks = [...allTask, newTask];
@@ -30,7 +32,7 @@ const Content = () => {
     };
 
     const handleInlineEditing = (taskIndexNo) => {
-        setTest(taskIndexNo)
+        setTaskIndex(taskIndexNo)
     }
 
     const handleEdit = (newTaskName) => {
@@ -40,21 +42,21 @@ const Content = () => {
     const handleOnClickUpdate = () => {
         const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
         setAllTask(existingTasks);
-        existingTasks[test].taskName = editTask;
+        existingTasks[taskIndex].taskName = editTask;
 
         localStorage.setItem('tasks', JSON.stringify(existingTasks));
 
-        setTest(null)
+        setTaskIndex(null)
     }
 
     const handlePriority = (priority) => {
         const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
         setAllTask(existingTasks);
-        existingTasks[test].priority = priority;
+        existingTasks[taskIndex].priority = priority;
 
         localStorage.setItem('tasks', JSON.stringify(existingTasks));
-        console.log(test)
-        setTest(null)
+        console.log(taskIndex)
+        setTaskIndex(null)
     }
 
     const handleTaskStatus = (status, index) => {
@@ -69,9 +71,9 @@ const Content = () => {
     const handleDeleteTask = (index) => {
         const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
         setAllTask(existingTasks)
-            existingTasks.splice(index, 1);
-            localStorage.setItem('tasks', JSON.stringify(existingTasks));
-        
+        existingTasks.splice(index, 1);
+        localStorage.setItem('tasks', JSON.stringify(existingTasks));
+
     };
 
 
@@ -83,8 +85,10 @@ const Content = () => {
     return (
         <div className="flex gap-2 font-serif ">
             <div className=' bg-opacity-10 p-2  '>
+            <h2 className='bg-gray-500 p-2 bg-opacity-30'>ToDo</h2>
+
                 <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden  bg-opacity-15">
-                    <h2>ToDo</h2>
+
                     {
                         allTask.map((task, index) => (
                             task.status === 'todo' &&
@@ -92,7 +96,7 @@ const Content = () => {
                                 task={task}
                                 handleEdit={handleEdit}
                                 handleOnClickUpdate={handleOnClickUpdate}
-                                test={test === index}
+                                test={taskIndex === index}
                                 index={index}
                                 editTask={handleInlineEditing}
                                 handlePriority={handlePriority}
@@ -128,8 +132,8 @@ const Content = () => {
                 </div>
             </div>
             <div className=' bg-opacity-10 p-2  '>
+                <h2 className='bg-gray-500 p-2 bg-opacity-30'>Ongoing</h2>
                 <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
-                    <h2>ToDo</h2>
                     {
                         allTask.map((task, index) => (
                             task.status === 'ongoing' &&
@@ -137,7 +141,7 @@ const Content = () => {
                                 task={task}
                                 handleEdit={handleEdit}
                                 handleOnClickUpdate={handleOnClickUpdate}
-                                test={test === index}
+                                test={taskIndex === index}
                                 index={index}
                                 editTask={handleInlineEditing}
                                 handlePriority={handlePriority}
@@ -173,8 +177,9 @@ const Content = () => {
                 </div>
             </div>
             <div className=' bg-opacity-10 p-2  '>
+                <h2 className='bg-gray-500 p-2 bg-opacity-30'>Completed</h2>
+
                 <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
-                    <h2>ToDo</h2>
                     {
                         allTask.map((task, index) => (
                             task.status === 'complete' &&
@@ -182,7 +187,7 @@ const Content = () => {
                                 task={task}
                                 handleEdit={handleEdit}
                                 handleOnClickUpdate={handleOnClickUpdate}
-                                test={test === index}
+                                test={taskIndex === index}
                                 index={index}
                                 editTask={handleInlineEditing}
                                 handlePriority={handlePriority}

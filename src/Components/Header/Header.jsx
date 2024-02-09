@@ -6,18 +6,16 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Outlet } from 'react-router-dom';
-
+import { Link, Outlet } from 'react-router-dom';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import CottageIcon from '@mui/icons-material/Cottage';
 const drawerWidth = 240;
 
 function Header(props) {
@@ -41,35 +39,40 @@ function Header(props) {
   };
 
   const drawer = (
-    <div>
+    <div style={{ height: '100vh', backgroundColor: 'rgba(13, 40, 0, 0.15)' }}>
       <Toolbar />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <CottageIcon />
+            </ListItemIcon>
+            <Link to="/">
+              <Typography variant="h6" noWrap component="div">
+                <h2 className='font-serif'>Home</h2>
+              </Typography>
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
-      <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <FormatListBulletedIcon />
+            </ListItemIcon>
+            <Link to="/all-to-do-list">
+              <Typography variant="h6" noWrap component="div">
+                <h2 className='font-serif'>See all tasks</h2>
+              </Typography>
+            </Link>
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
+
+
   );
 
   // Remove this const when copying and pasting into your project.
@@ -81,10 +84,13 @@ function Header(props) {
       <AppBar
         position="fixed"
         sx={{
+          backgroundColor: 'rgba(13, 40, 0, 0.15)', // Green color with 25% opacity
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
       >
+
+
         <Toolbar>
           <IconButton
             color="inherit"
@@ -96,7 +102,8 @@ function Header(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+
+            <h2 className='font-mono'>ToDo List</h2>
           </Typography>
         </Toolbar>
       </AppBar>
