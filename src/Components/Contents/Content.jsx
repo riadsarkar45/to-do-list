@@ -6,6 +6,7 @@ const Content = () => {
     const [inputText, setInputText] = useState('');
     const [allTask, setAllTask] = useState([])
     const [test, setTest] = useState('')
+    const [editTask, setEditTask] = useState('')
     const makeVisibleInputField = (column) => {
         setIsClicked(true)
         setTaskType(column)
@@ -28,9 +29,25 @@ const Content = () => {
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
     };
 
-    const editTask = (taskIndexNo) =>{
+    const handleInlineEditing = (taskIndexNo) => {
         setTest(taskIndexNo)
     }
+
+    const handleEdit = (newTaskName) => {
+        setEditTask(newTaskName)
+    };
+
+    const handleOnClickUpdate = () => {
+        const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        console.log(existingTasks)
+        setAllTask(existingTasks);
+        existingTasks[test].taskName = editTask;
+
+        localStorage.setItem('tasks', JSON.stringify(existingTasks));
+
+        setTest(null)
+    }
+
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -45,7 +62,7 @@ const Content = () => {
                     {
                         allTask.map((task, index) => (
                             task.status === 'Pending' &&
-                            <Tasks key={index} task={task} test={test === index} index={index} editTask={editTask}></Tasks>
+                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
                         ))
                     }
 
@@ -80,7 +97,7 @@ const Content = () => {
                     {
                         allTask.map((task, index) => (
                             task.status === 'Ongoing' &&
-                            <Tasks key={index} task={task} test={test === index}index={index} editTask={editTask}></Tasks>
+                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
                         ))
                     }
 
@@ -115,7 +132,7 @@ const Content = () => {
                     {
                         allTask.map((task, index) => (
                             task.status === 'Completed' &&
-                            <Tasks key={index} task={task} test={test === index} index={index} editTask={editTask}></Tasks>
+                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
                         ))
                     }
 
