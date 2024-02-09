@@ -20,7 +20,7 @@ const Content = () => {
         const newTask = {
             taskName: inputText,
             status: taskType,
-            priority: 'none'
+            priority: ''
         };
 
         const updatedTasks = [...allTask, newTask];
@@ -39,7 +39,6 @@ const Content = () => {
 
     const handleOnClickUpdate = () => {
         const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        console.log(existingTasks)
         setAllTask(existingTasks);
         existingTasks[test].taskName = editTask;
 
@@ -48,21 +47,58 @@ const Content = () => {
         setTest(null)
     }
 
+    const handlePriority = (priority) => {
+        const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        setAllTask(existingTasks);
+        existingTasks[test].priority = priority;
+
+        localStorage.setItem('tasks', JSON.stringify(existingTasks));
+        console.log(test)
+        setTest(null)
+    }
+
+    const handleTaskStatus = (status, index) => {
+        const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        setAllTask(existingTasks);
+        existingTasks[index].status = status;
+
+        localStorage.setItem('tasks', JSON.stringify(existingTasks));
+        console.log(index)
+    }
+
+    const handleDeleteTask = (index) => {
+        const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        setAllTask(existingTasks)
+            existingTasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(existingTasks));
+        
+    };
+
+
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
         setAllTask(storedTasks);
     }, []);
-    console.log(test)
     return (
         <div className="flex gap-2 font-serif ">
-            <div className='bg-red-500 bg-opacity-10 p-2 w-[24rem]'>
-                <div className="overflow-y-auto h-[29rem]  rounded-md">
-                    <h2>Pending</h2>
+            <div className=' bg-opacity-10 p-2  '>
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden  bg-opacity-15">
+                    <h2>ToDo</h2>
                     {
                         allTask.map((task, index) => (
-                            task.status === 'Pending' &&
-                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
+                            task.status === 'todo' &&
+                            <Tasks key={index}
+                                task={task}
+                                handleEdit={handleEdit}
+                                handleOnClickUpdate={handleOnClickUpdate}
+                                test={test === index}
+                                index={index}
+                                editTask={handleInlineEditing}
+                                handlePriority={handlePriority}
+                                handleTaskStatus={handleTaskStatus}
+                                handleDeleteTask={handleDeleteTask}
+                            />
                         ))
                     }
 
@@ -70,18 +106,18 @@ const Content = () => {
 
                 <div className=''>
                     {
-                        taskType === 'Pending' && isClicked ? (
-                            <div className=" bg-opacity-20 text-xl rounded-md w-full flex justify-between items-center">
+                        taskType === 'todo' && isClicked ? (
+                            <div className="mt-1 bg-opacity-20 text-xl  w-full flex justify-between items-center">
                                 <div>
-                                    <input value={inputText} onChange={handleChange} className='p-2 border-0 w-[16rem]' placeholder='Enter title for this card' type="text" />
+                                    <input value={inputText} onChange={handleChange} className='p-1 border-2 w-[13.1rem]' placeholder='Enter title for this card' type="text" />
                                 </div>
                                 <div>
-                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20  rounded-r-md p-2'>Add Card</button>
+                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20   p-1'>Add Card</button>
                                 </div>
                             </div>
                         ) : (
-                            <div className='text-center border border-blue-200 p-2 hover:bg-blue-200 rounded-md'>
-                                <button onClick={() => makeVisibleInputField('Pending')} className=''>+ Add Card</button>
+                            <div className='hover:bg-green-500 bg-green-600 hover:bg-opacity-20 bg-opacity-20 p-2 '>
+                                <button onClick={() => makeVisibleInputField('todo')} className=''>+ Add Card</button>
                             </div>
                         )
                     }
@@ -91,13 +127,127 @@ const Content = () => {
 
                 </div>
             </div>
-            <div className='bg-red-500 bg-opacity-10 p-2 w-[24rem]'>
-                <div className="overflow-y-auto h-[29rem]  rounded-md">
+            <div className=' bg-opacity-10 p-2  '>
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
+                    <h2>ToDo</h2>
+                    {
+                        allTask.map((task, index) => (
+                            task.status === 'ongoing' &&
+                            <Tasks key={index}
+                                task={task}
+                                handleEdit={handleEdit}
+                                handleOnClickUpdate={handleOnClickUpdate}
+                                test={test === index}
+                                index={index}
+                                editTask={handleInlineEditing}
+                                handlePriority={handlePriority}
+                                handleTaskStatus={handleTaskStatus}
+                                handleDeleteTask={handleDeleteTask}
+                            />
+                        ))
+                    }
+
+                </div>
+
+                <div className=''>
+                    {
+                        taskType === 'ongoing' && isClicked ? (
+                            <div className="mt-1 bg-opacity-20 text-xl  w-full flex justify-between items-center">
+                                <div>
+                                    <input value={inputText} onChange={handleChange} className='p-1 border-2 w-[13.1rem]' placeholder='Enter title for this card' type="text" />
+                                </div>
+                                <div>
+                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20   p-1'>Add Card</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='hover:bg-green-500 bg-green-600 hover:bg-opacity-20 bg-opacity-20 p-2 '>
+                                <button onClick={() => makeVisibleInputField('ongoing')} className=''>+ Add Card</button>
+                            </div>
+                        )
+                    }
+
+
+
+
+                </div>
+            </div>
+            <div className=' bg-opacity-10 p-2  '>
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
+                    <h2>ToDo</h2>
+                    {
+                        allTask.map((task, index) => (
+                            task.status === 'complete' &&
+                            <Tasks key={index}
+                                task={task}
+                                handleEdit={handleEdit}
+                                handleOnClickUpdate={handleOnClickUpdate}
+                                test={test === index}
+                                index={index}
+                                editTask={handleInlineEditing}
+                                handlePriority={handlePriority}
+                                handleTaskStatus={handleTaskStatus}
+                                handleDeleteTask={handleDeleteTask}
+                            />
+                        ))
+                    }
+
+                </div>
+
+                <div className=''>
+                    {
+                        taskType === 'complete' && isClicked ? (
+                            <div className=" mt-1 bg-opacity-20 text-xl  w-full flex justify-between items-center">
+                                <div>
+                                    <input value={inputText} onChange={handleChange} className='p-1 border-2 w-[13.1rem]' placeholder='Enter title for this card' type="text" />
+                                </div>
+                                <div>
+                                    <button onClick={() => handleAddTask()} className='hover:bg-green-500 bg-green-500 hover:bg-opacity-20 bg-opacity-20   p-1'>Add Card</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className='hover:bg-green-500 bg-green-600 hover:bg-opacity-20 bg-opacity-20 p-2 '>
+                                <button onClick={() => makeVisibleInputField('complete')} className=''>+ Add Card</button>
+                            </div>
+                        )
+                    }
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            {/* <div className='bg-red-500 bg-opacity-10 p-2 '>
+                <div className="overflow-y-auto h-[29rem]  overflow-hidden ">
                     <h2>Ongoing</h2>
                     {
                         allTask.map((task, index) => (
-                            task.status === 'Ongoing' &&
-                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
+                            task.status === 'ongoing' &&
+                            <Tasks key={index}
+                                task={task}
+                                handleEdit={handleEdit}
+                                handleOnClickUpdate={handleOnClickUpdate}
+                                test={test === index}
+                                index={index}
+                                editTask={handleInlineEditing}
+                                handlePriority={handlePriority}
+                                handleTaskStatus={handleTaskStatus}
+                            />
                         ))
                     }
 
@@ -105,18 +255,18 @@ const Content = () => {
 
                 <div className=''>
                     {
-                        taskType === 'Ongoing' && isClicked ? (
-                            <div className=" bg-opacity-20 text-xl rounded-md w-full flex justify-between items-center">
+                        taskType === 'ongoing' && isClicked ? (
+                            <div className=" bg-opacity-20 text-xl  w-full flex justify-between items-center">
                                 <div>
-                                    <input value={inputText} onChange={handleChange} className='p-2 border-0 w-[16rem]' placeholder='Enter title for this card' type="text" />
+                                    <input value={inputText} onChange={handleChange} className='p-1 border-0 w-[16rem]' placeholder='Enter title for this card' type="text" />
                                 </div>
                                 <div>
-                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20  rounded-r-md p-2'>Add Card</button>
+                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20   p-1'>Add Card</button>
                                 </div>
                             </div>
                         ) : (
-                            <div className='text-center border border-blue-200 p-2 hover:bg-blue-200 rounded-md'>
-                                <button onClick={() => makeVisibleInputField('Ongoing')} className=''>+ Add Card</button>
+                            <div className='text-center border border-blue-200 p-2 hover:bg-blue-200 '>
+                                <button onClick={() => makeVisibleInputField('ongoing')} className=''>+ Add Card</button>
                             </div>
                         )
                     }
@@ -126,13 +276,22 @@ const Content = () => {
 
                 </div>
             </div>
-            <div className='bg-red-500 bg-opacity-10 p-2 w-[24rem]'>
-                <div className="overflow-y-auto h-[29rem]  rounded-md">
+            <div className='bg-red-500 bg-opacity-10 p-2 '>
+                <div className="overflow-y-auto h-[29rem]  ">
                     <h2>Completed</h2>
                     {
                         allTask.map((task, index) => (
-                            task.status === 'Completed' &&
-                            <Tasks key={index} task={task} handleEdit={handleEdit} handleOnClickUpdate={handleOnClickUpdate} test={test === index} index={index} editTask={handleInlineEditing}></Tasks>
+                            task.status === 'complete' &&
+                            <Tasks key={index}
+                                task={task}
+                                handleEdit={handleEdit}
+                                handleOnClickUpdate={handleOnClickUpdate}
+                                test={test === index}
+                                index={index}
+                                editTask={handleInlineEditing}
+                                handlePriority={handlePriority}
+                                handleTaskStatus={handleTaskStatus}
+                            />
                         ))
                     }
 
@@ -140,18 +299,18 @@ const Content = () => {
 
                 <div className=''>
                     {
-                        taskType === 'Completed' && isClicked ? (
-                            <div className=" bg-opacity-20 text-xl rounded-md w-full flex justify-between items-center">
+                        taskType === 'complete' && isClicked ? (
+                            <div className=" bg-opacity-20 text-xl  w-full flex justify-between items-center">
                                 <div>
-                                    <input value={inputText} onChange={handleChange} className='p-2 border-0 w-[16rem]' placeholder='Enter title for this card' type="text" />
+                                    <input value={inputText} onChange={handleChange} className='p-1 border-0 w-[16rem]' placeholder='Enter title for this card' type="text" />
                                 </div>
                                 <div>
-                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20  rounded-r-md p-2'>Add Card</button>
+                                    <button onClick={() => handleAddTask()} className='bg-blue-500 bg-opacity-20   p-1'>Add Card</button>
                                 </div>
                             </div>
                         ) : (
-                            <div className='text-center border border-blue-200 p-2 hover:bg-blue-200 rounded-md'>
-                                <button onClick={() => makeVisibleInputField('Completed')} className=''>+ Add Card</button>
+                            <div className='text-center border border-blue-200 p-2 hover:bg-blue-200 '>
+                                <button onClick={() => makeVisibleInputField('complete')} className=''>+ Add Card</button>
                             </div>
                         )
                     }
@@ -160,7 +319,7 @@ const Content = () => {
 
 
                 </div>
-            </div>
+            </div> */}
 
 
         </div>
