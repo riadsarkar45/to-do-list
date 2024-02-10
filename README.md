@@ -16,6 +16,8 @@ The Simple To-Do List project is a web application designed to help users manage
 - Mark Task as Completed: Tasks can be marked as completed by clicking on the complete button next to each task.
 - Mark Task as To Do: Tasks can be marked as todo by clicking on the to do button next to each task.
 - Mark Task as OnGoing: Tasks can be marked as ongoing by clicking on the ongoing button next to each task.
+- User can change priority High Low Medium each priority has a color High (red color) Medium (yellow color) Low (green color)
+- User can search the tasks and filter with priority's.
 
 # Technology or packages i used
 
@@ -30,3 +32,4 @@ The Simple To-Do List project is a web application designed to help users manage
 - After cloning the project go inside the cloned project.
 - Open terminal
 - Run NPM I command after completing the dependency installation run NPM RUN DEV (small later).
+- Try to run the command's small later
