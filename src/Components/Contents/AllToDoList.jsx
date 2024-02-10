@@ -53,7 +53,7 @@ const AllToDoList = () => {
                     </select>
                 </div>
             </div>
-            <div className='lg:flex lg:flex-wrap md:flex lg:flex-wrap gap-2 m-auto font-serif'>
+            <div className='lg:flex lg:flex-wrap md:flex gap-2 m-auto font-serif'>
                 {
                     isSearched ? (
                         searched?.map((task, index) => (

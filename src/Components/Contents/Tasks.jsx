@@ -26,10 +26,11 @@ const Tasks = ({ task, index, editTask, test, handleEdit, handleOnClickUpdate, h
                                         </>
                                     ) : status === 'todo' ? (
                                         <>
-                                            <button onClick={() => handleTaskStatus('todo', index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Todo</button>
                                             <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
-                                            <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+                                            <button onClick={() => handleTaskStatus('ongoing', index)} className='border border-yellow-600 hover:bg-yellow-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Ongoing</button>
 
+                                            <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+                                            
                                         </>
                                     ) : null
                                 }
