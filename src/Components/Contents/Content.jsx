@@ -83,11 +83,11 @@ const Content = () => {
         setAllTask(storedTasks);
     }, []);
     return (
-        <div className="flex gap-2 font-serif ">
+        <div className="lg:flex gap-2 font-serif ">
             <div className=' bg-opacity-10 p-2  '>
             <h2 className='bg-gray-500 p-2 bg-opacity-30'>ToDo</h2>
 
-                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden  bg-opacity-15">
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto lg:w-[19rem] overflow-x-hidden  bg-opacity-15">
 
                     {
                         allTask.map((task, index) => (
@@ -133,7 +133,7 @@ const Content = () => {
             </div>
             <div className=' bg-opacity-10 p-2  '>
                 <h2 className='bg-gray-500 p-2 bg-opacity-30'>Ongoing</h2>
-                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto lg:w-[19rem] overflow-x-hidden bg-opacity-15">
                     {
                         allTask.map((task, index) => (
                             task.status === 'ongoing' &&
@@ -179,7 +179,7 @@ const Content = () => {
             <div className=' bg-opacity-10 p-2  '>
                 <h2 className='bg-gray-500 p-2 bg-opacity-30'>Completed</h2>
 
-                <div className=" bg-gray-500 h-[25rem] overflow-y-auto w-[19rem] overflow-x-hidden bg-opacity-15">
+                <div className=" bg-gray-500 h-[25rem] overflow-y-auto lg:w-[19rem] overflow-x-hidden bg-opacity-15">
                     {
                         allTask.map((task, index) => (
                             task.status === 'complete' &&

@@ -39,7 +39,7 @@ function Header(props) {
   };
 
   const drawer = (
-    <div style={{ height: '100vh', backgroundColor: 'rgba(13, 40, 0, 0.15)' }}>
+    <div style={{ height: '100vh', backgroundColor: 'rgba(93, 40, 0, 0.15)' }}>
       <Toolbar />
       <Divider />
       <List>

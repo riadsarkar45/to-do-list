@@ -1,23 +1,46 @@
-import { FaPen } from "react-icons/fa";import { FaMinus } from "react-icons/fa";
+import { FaPen } from "react-icons/fa"; import { FaMinus } from "react-icons/fa";
 const Tasks = ({ task, index, editTask, test, handleEdit, handleOnClickUpdate, handlePriority, handleTaskStatus, handleDeleteTask }) => {
     const { taskName, priority, status } = task;
 
     return (
         <div>
-            <div className={`{ ${test ? 'bg-red-500' : 'bg-green-500'} mt-3 bg-opacity-10 text-2xl p-2 rounded-md}`}>
+            <div className={`{ ${test ? 'bg-red-500' : 'bg-green-500'} ${status === 'complete' ? 'bg-green-500' : status === 'ongoing' ? 'bg-yellow-500' : status === 'todo' ? 'bg-red-500' : null} mt-3 bg-opacity-10 text-2xl p-2 rounded-md}`}>
                 <div>
                     <div className=''>
                         <div className='flex justify-between items-center mb-1'>
                             <div><h2 className='cursor-pointer text-sm' onClick={() => editTask(index)}><FaPen /></h2></div>
                             <div className='flex gap-1'>
-                                <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
+                                {
+                                    status === 'complete' ? (
+                                        <>
+
+                                            <button onClick={() => handleTaskStatus('ongoing', index)} className='border border-yellow-600 hover:bg-yellow-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Ongoing</button>
+                                            <button onClick={() => handleTaskStatus('todo', index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Todo</button>
+                                            <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+                                        </>
+                                    ) : status === 'ongoing' ? (
+                                        <>
+                                            <button onClick={() => handleTaskStatus('todo', index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Todo</button>
+                                            <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
+                                            <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+                                        </>
+                                    ) : status === 'todo' ? (
+                                        <>
+                                            <button onClick={() => handleTaskStatus('todo', index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Todo</button>
+                                            <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
+                                            <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+
+                                        </>
+                                    ) : null
+                                }
+                                {/* <button onClick={() => handleTaskStatus('complete', index)} className='border border-green-300 hover:bg-green-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Complete</button>
                                 <button onClick={() => handleTaskStatus('ongoing', index)} className='border border-yellow-600 hover:bg-yellow-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Ongoing</button>
                                 <button onClick={() => handleTaskStatus('todo', index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-20 text-sm p-1 rounded-md'>Todo</button>
-                                <button onClick={() => handleDeleteTask( index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button>
+                                <button onClick={() => handleDeleteTask(index)} className='border border-red-600 hover:bg-red-500 hover:bg-opacity-40 text-sm p-1 rounded-md'>Delete</button> */}
                             </div>
                         </div>
                         <div className='border border-white opacity-30'></div>
-                        <p className='w-[20rem] p-3'>{taskName}</p>
+                        <p className='lg:w-[20rem] p-3'>{taskName}</p>
                     </div>
                     {
                         test ? (
